@@ -1,0 +1,9 @@
+#!/bin/sh
+ls ../LZOData > ../HostData/All.hosts
+cat ../HostData/*.info >../HostData/stat
+cat ../HostData/stat | sort +1 -b -g    > ../HostData/ip
+cat ../HostData/stat | sort +2 -b -g -r > ../HostData/files
+cat ../HostData/stat | sort +3 -b -g -r > ../HostData/rms
+cat ../HostData/stat | sort +4 -b -g -r > ../HostData/mp3
+cat ../HostData/stat | sort +5 -b -g -r > ../HostData/winfiles
+cat ../HostData/stat | sort +6 -b -g -r > ../HostData/linuxfiles

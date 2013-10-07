@@ -1,0 +1,11 @@
+Parker BUGS -- known bugs. 2004-04-30
+
+
+* in some ftp site binary "collect" can't finish seaching.
+	fixed at 2005-06-30, miss a close after mkstemp
+* in some site with ftpd such as glftpd,ls -lR take too many time, and glftpd
+	regard list as idle. so when in these site, collect can't finish.
+	-r should be used with these site
+* the ftpdata that out of date can't be remove automatically.
+* if ftp_user & ftp_pass contain "@", the scanline function will be wrong,
+* close(ns) and close(hh) in function QueryDir() 

@@ -1,0 +1,71 @@
+<HTML><HEAD><TITLE>网络自助站FTP搜索</TITLE>
+<META content="text/html; charset=gb2312" http-equiv=Content-Type>
+<style><!--
+body {font-family: "";}
+//--></style>
+
+</HEAD>
+
+<BODY  leftMargin=0 style="FONT-SIZE: 14px" topMargin=0 background='/parker/images/statbg.gif'
+color="red" bgColor=#FFCC99>
+<TABLE align=center border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TBODY> 
+  <TR>
+    <TD background='/parker/images/title_bg.gif' colSpan=3>
+      <DIV align=center><IMG border=0 height=118 name=title 
+      src="/parker/images/title.gif" width=667></DIV>
+    </TD></TR>
+  <tr> <td>
+<dir><br>
+<h4>关于本站搜索引擎</h4>
+<br>
+  &nbsp;&nbsp;&nbsp; &nbsp;本站使用的搜索引擎是由Nosey parker的中文版西安交通大学版本,经过大幅修改而来.   
+新的搜索引擎目标是能够搜索全教育网的ftp, 原来的版本由于在整理数据时要用到大量的内存,   
+一旦站点太多,数据量太大,就会因为内存需求成倍增加而无法进行下去。<p>
+  &nbsp;&nbsp;&nbsp;&nbsp; 我考虑到以文件名排序意义不大, 去掉了该功能, 使得内存不会成为瓶颈。 
+  重新设计的数据存放结构, 并运用快速的压缩算法(LZO), 既节省了大量硬盘空间,  
+又使得把所有数据进行缓存成为可能, 
+  大大提高了搜索速度。再去掉了过时的不使用的界面(包括telnet, 
+  dos用户接口,gopher,mail),只保留www的在线搜索,  
+因此不必再启动inetd的一个线程, 既减少网络接口的负担,也增加安全性.<br> 
+  &nbsp;&nbsp;&nbsp;&nbsp; 新的版本支持Redhat7.2。<br>
+
+  </p>
+
+<h4>新增功能:</h4>
+<li>对搜索功能, 增加多个关键字的支持, 提供了排除功能, 指定文件扩展名(可以有多种不同的文件).<br>
+<li>提供ftp站点内容的统计和排名, 在线推荐ftp站点, 进行免费ip检验,以解决国外ip流量的计费问题.<br>
+<li>考虑到有些FTP网站会因为某些原因关闭, 因此在主机名后显示目录更新时间, 提供参考.<br>
+<li>而且对于太长时间无法更新的站点，在搜索里面不会在出现。<br>
+<li>在输出搜索结果时, 对站点进行了排序, 使得离访问者最"近"的站点放在最前面(以IP为准).<br>
+
+<h4>性能的改进比较</h4>
+<li>硬盘占用:旧版在收集超过100个站点数据后, 占用600M硬盘.<br>
+    改进后的原始数据有100M, 压缩后只有15M!<br>
+<li>搜索速度: 由于硬盘速度瓶颈, 原来搜索100M数据要20秒, 使用压缩后只要3-4秒(PIII-450, 256M内存).<br>
+
+<br><br>
+<h4>遵守协议</h4>
+根据<a href='/parker/gpl.html'>GPL</a>协议, 搜索引擎提供源代码
+<br>
+任何人可以得到源代码,可以修改、使用这个软件。<br>
+如果你感兴趣，请到<a href='http://sourceforge.net/projects/parker'>http://sourceforge.net/projects/parker</a>上参与开发工作，让我们一起把它做的更好。<br>
+<br>
+<a href='install.html'>安装帮助</a><br>
+<br><br>
+<dir><dir><dir><dir><dir><dir><dir><dir><dir><dir><dir><dir>
+李翀<br>
+2002年3月10日<br>
+</dir>
+</dir>
+</dir>
+</td></tr>
+  </tbody>
+</TABLE>
+<HR color=black SIZE=1 width="100%" noshade>
+
+<DIV align=center><FONT color=red><SPAN style="FONT-SIZE: 14px">Copyright <FONT 
+color=red>&copy;</FONT> Nanjing University 2001.</SPAN></FONT><BR>
+  <font color="red">Server </font><FONT 
+color=red>master:<A href="mailto:mesolinux@263.net">steff</A> 　　Web Designer:<A href="mailto:dent@nju.edu.cn">dent</a></FONT></DIV>
+</BODY></HTML>

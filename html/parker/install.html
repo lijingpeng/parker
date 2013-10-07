@@ -1,0 +1,223 @@
+<html>
+<title>parker安转帮助</title>
+
+
+<body>
+<p>
+<big><big>安装指南：</big></big><br>
+<br>
+Redhat 7.x的安装指南：<br>    
+======================================================================<br>
+<b>
+1 在Redhat7.x中建议把变动的数据放在/var下。<br>  
+</b> 
+  以root登陆，<br>
+  解开文件包(如果已经解开,可以拷贝过去)<br>
+  [root@linux /]$ cd /var<br>
+  [root@linux /var]$ tar vxzf parker-200x-x-xx.tar.gz<br>
+<br>
+  #mkdir /var/www/cgi-bin/parker<br>
+  #cp /var/parker/html/parker /var/www/html/parker -r<br>
+
+<br>
+<b>
+2 设定各个文件的读写权限<br>  
+</b> 
+  chown nobody.nobody /var/parker -R<br>    
+  chmod 770 /var/parker -R<br>    
+  nobody是cgi的执行用户.<br>
+<br>
+<b>
+3 修改源程序文件路径：<br>  
+</b> 
+  (如果改变安装目录的话)(默认为/var/parker)<br>
+  src/Makefile		PARKER_HOME= /var/parker            (安装目录)<br>    
+			CGI_HOME= /var/www/cgi-bin/parker (cgi目录)<br>    
+ 
+<br>
+<b>
+4 根据喜好修改cgi输出界面<br>  
+</b> 
+  src/cgi*		根据需要修改，主要修改页面的输出外观<br>    
+  			主要输出函数是<br>
+		370	PutHeaders(void)<br>    
+		386	Search(void)<br>    
+		494	void PutEnd(void)<br>    
+  还有显示定义文件  src/language.h <br>
+<br>
+<b>
+5 重新编译代码<br>  
+</b> 
+  cd src<br>    
+  make<br>
+  make install<br>    
+<br>
+<b>
+6 配置crontab，以便定时自动更新数据<br>  
+</b> 
+  定时更新数据<br>
+  crontab -u parker -e<br>    
+   1 1 * * * /var/parker/bin/flashdata %(这里是每天更新)<br>    
+<br>
+<b>
+7 手动更新数据<br>  
+</b> 
+  编辑站点列表文件 /var/parker/etc/CollectList&nbsp;<br>   
+  执行搜集数据的命令:<br>
+  [root@linux /var/parker/bin]$ ./flashdata &amp;<br>    
+<br>
+<b>
+ html是我提供的页面例子.<br>   
+</b> 
+http://localhost/parker/index.html<br>
+<br>
+<br>
+
+======================================================================<br>
+下面是各个文件和目录的作用和安排:<br>
+<big>bin/:<br>
+</big><b>
+  collect [-l|-r|-d] [ftp site]<br>  
+</b> 
+		搜集ftp站点数据用的, ftp站点定义在 etc/CollectList<br>    
+                数据压缩后放在放在LZOData下. 临时工作目录在 tmp/, 站点的统计数据放在 Statist/下<br>    
+		参数使用如下: 	-l 使用LIST -lR命令列出服务区上的目录；<br>    
+				-d 通过下载类似于 ls-lR.tgz的文件来获得目录。（有的服务器上会定时<br>    
+					建立这样的文件。<br>
+				-r 自动进入各个子目录得到整个目录的列表。<br>    
+				默认的调用顺序是 -l,-d,-r 搜索etc/CollectList中的ftp站点<br>    
+<br>
+<b>
+  flashdata<br> </b> 更新数据的调度文件.调用collect<br>
+<br>
+<b>
+  convertmask<br>	</b>	把从http://www.nic.edu.cn/RS/ipstat/internalip/<br> 
+		取得的教育网免费IP定义列表更新到$parker/HostData/Edu.mask<br>
+		要求输入文件格式如下:<br>
+                host	subnet	netmask<br>    
+	如	202.119.32.0	0.0.31.255	255.255.224.0<br>    
+		使用方法：设拷贝下来的文件为list.txt, 执行convertmask list.txt<br>    
+<br>
+<b>
+  flashlist<br>	</b>	一段时间后,把很大的$parker/etc/onworkhost一些无法联结的<br> 
+		IP去掉, 备份文件在$parker/etc/backlist<br>    
+<br>
+<b>
+  listfilter<br>	</b>	把搜集到的ftp站点列表转成onworkhost<br> 
+<br>
+<b>
+  getdnsname </b> &lt;ip><br> 
+		返回ip的DNS名字. 没有的话,返回空行.<br>    
+<br>
+<b>
+  makestat<br>	</b>	对ftp站点上的各种文件进行统计排序, 供Statist使用，可以分析不同站点对不同文件的偏好。<br>    
+<br>
+<b>
+  lzo_comp<br>	</b>	把目录数据用LZO算法进行压缩的程序. 读的部分由search直接进行。<br>    
+<br>
+<big>
+src/:<br>
+</big><b>
+  Makefile<br>	</b>	make定义文件<br> 
+<b> 
+  config.h<br>	</b>	目录,文件、目录的定义, make时由conf.head和conf.end生成<br>    
+<b>  
+  conf.head<br>
+  conf.end<br>
+  parker.h<br>	</b>	头文件,各个程序的定义,&nbsp;<br>
+<br>
+<b>
+  collect.c<br>	</b>	搜集ftp站点数据的Ｃ代码源程序<br> 
+<b> 
+  collect.h<br>	</b>	头文件<br> 
+<b> 
+  listfilter.c<br>	</b>	能够比较自动的一些ftp站点列表文件中抽取从ip, 例如文件oldlist.txt如下:<br>    
+        ---------------------------------------<br>
+        南大FTP: 202.119.32.32<br>    
+        交大FTP: xxx.xxx.xxx.xx     "good"<br>    
+        202.119.46.57<br>
+        清华 166.111.19.56<br>    
+            ..........<br>
+            ........<br>
+        ---------------------------------------<br>
+	使用命令"listfilter oldlist", 可以得到<br>    
+	-----------------------------------<br>
+	202.119.32.101<br>
+	xxx.xxx.xxx.xx<br>
+	166.111.19.56<br>
+	..........<br>
+	.....<br>
+	-----------------------------------<br>
+<br>
+<b>
+  getdnsname.c <br></b>-&gt;bin/getdnsname	取得IP的DNS域名<br>    
+<b>  
+  convertmask.c<br>	</b>	把从http://www.nic.edu.cn/RS/ipstat/internalip/<br> 
+                取得的免费IP定义列表更新到$parker/HostData/Edu.mask&nbsp;<br>
+<br>
+<b>
+  common.c<br>	</b>	得到ftp的域名等信息等一些共同的函数<br> 
+<b> 
+  log.c	<br>	</b>	纪录搜索的历史, 放在 log/, 由search.c 调用<br>    
+<b>  
+  search.c<br>	</b>	搜索用的cgi       -&lt;LZOData/*<br>    
+<b>  
+  statist.c<br>	</b>	显示统计信息的cgi  -&lt;Statist/*<br>    
+<b>  
+  submit.c<br>	</b>	提交新ftp站点的cgi   ->etc/CollectList<br>    
+<br>
+<b>
+  minilzo.h<br>	</b>	miniLZO压缩函数库的头文件<br> 
+<b> 
+  minilzo.c<br>	</b>	miniLZO压缩函数库的主文件<br> 
+<b> 
+  lzoconf.h<br>
+</b>
+<br>
+<b>
+  lzo_comp.c<br>	</b>	调用miniLZO压缩函数库的目录数据压缩器<br> 
+<b> 
+  lzo_fun.c<br>	</b>	调用miniLZO压缩函数库的解压缩函数,供search.c调用<br> 
+<br>
+<big>
+etc/:<br>
+</big><b>
+  CollectList<br>	</b>	FTP列表文件<br> 
+
+<big>
+LZOData/:<br>
+</big>
+  只存放搜集到的目录数据, 以ip为文件名, 以压缩格式存放.<br>    
+<br>
+<big>
+HostData/:<br>
+</big>
+  存放站点的信息, ip.info为相应的域名，<br>    
+<b>  
+  Inn.mask<br>	</b>	为南京大学内部网络的IP定义,<br> 
+<b> 
+  Nju.mask<br>	</b>	为南京大学正式IP的定义.<br> 
+<b> 
+  Edu.mask<br>	</b>	为教育网的IP定义(免费)<br> 
+<br>
+<big>
+log/:<br>
+</big><b>
+  search.log<br>	</b>	用户搜索的完整纪录<br> 
+<b> 
+  searchkey.log<br>	</b>	搜索的关键字纪录<br> 
+<b> 
+  submit.log<br>	</b>	用户推荐站点的纪录<br> 
+<br>
+<big>
+Statist/:<br>
+</big><b>$IP.stat<br>	</b>	各个FTP的统计数据,最后集合到stat<br> 
+<b> 
+  stat<br>		</b>		统计的原始数据<br> 
+<b> 
+  其他<br>		</b>		按各个不同要求排序的结果<br> 
+<br>
+tmp/:<br>
+  工作目录
+</body>
+</html>

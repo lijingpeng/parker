@@ -1,0 +1,259 @@
+                           Parker FTP search engine
+
+#############################################################################
+#   Introduction  
+#############################################################################
+    NoseyParker is a network tool allowing users to perform searches for files
+    stored on public FTP servers. The function of Parker is similar to Lycos.
+
+    This software was developed by Jiri A. Randus, Technical University, 
+    Liberec, Czech Republic.Now it has been Improved and translated into Chinese. 
+    It can be distributed under the terms of GNU General Public License.
+
+    This program is run and distributed in the hope that it will be useful,
+    but without any warranty; without even the implied warranty of
+    merchantability or fitness for a particular purpose.  See the
+    GNU General Public License for more details.
+    The host contacts public FTP servers and fetches the listings
+    of files available on each servers. These listings are then processed
+    and stored in the database. The database is updated on regular basis.
+
+    When client visit the web page and submit a keyword,
+   the server will search the database and find out archives which match the keyword.
+
+
+
+#############################################################################
+#    Author
+#############################################################################
+
+    NoseyParker, the search engine for FTP archives
+
+    Copyright (C) 2001-2002 by Steff
+    Copyright (C) 1993-96 by Jiri A. Randus 
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+    This Version was improved by steff, at 2001/5/16, 2002/2/16
+    E-mail:mesolinux@263.net
+    Home  :http://sourceforge.net/projects/parker
+    CVS   :cvs.parker.sourceforge.net
+
+
+#############################################################################
+#   INSTALLATION:
+#############################################################################
+
+(1) Choose a place on the disk where you would like to put the files and
+    extract the distribution archive there. When the distribution file
+    `parker-???.tgz' is extracted, the following files/directories are created:
+    The suggested place in Redhat 7.2 is /var/parker
+    Then copy the web support file to the web service path.
+    #cp /var/parker/cgi-bin/parker /var/www/cgi-bin/parker -r
+    #cp /var/parker/html/Parker /var/www/html/Parker -r
+
+(2) change the files' attrib
+  #chown nobody.nobody /var/parker -R
+  #chmod 770 /var/parker -R
+  nobody is the owner of cgi.
+
+(3) change the defination in Makefile£º
+  
+  Change the path(default is /var/parker) and your Language(English/Chinese)
+  src/Makefile		PARKER_HOME= /var/parker            (home path)
+			   CGI_HOME= /var/www/cgi-bin/parker (cgi path)
+
+(4) Change the interface in cgi as you like
+  src/cgi*		
+  		line	The following is the out put functions
+		370	PutHeaders(void)
+		386	Search(void)
+		494	void PutEnd(void)
+  			src/language.h
+  
+(5) Compile the program source
+  #make
+  #make install
+  
+(6) configure your crontab to make it updata automatically
+  #crontab -u parker -e
+   1 1 * * * /var/parker/bin/flashdata %(updata every data)
+
+(7) Edit the ftp server list
+   #vi /var/parker/etc/CollectList 
+
+  collect the archive list before use the engine:
+  [root@linux /var/parker/bin]$ ./flashdata &
+
+(8) Visit the server page and test it.
+  http://localhost/Parker/index.html
+
+PROGRAMS CALLED EXTERNALLY 
+(these should be in PATH or entered with their complete paths):
+
+*          a pager of some kind (more/less/pg...) as defined in Makefile
+gunzip     GNU unzip ... every decent UN*X should have that ;-)
+mv   standard UN*X utils (/bin, /usr/bin)
+
+
+If everything seems to work all right, you're set :-)
+
+#############################################################################
+#   History and Change list
+#############################################################################
+before 2.31
+Many changes, in fact, the birth of NoseyParker. 
+
+2.31 
+the version used for quite a long time, proving its strengths and weaknesses.
+
+2.4 
+Substring and Wildcards search converted to fast egrep search.
+
+2.41
+Data compression on gathering, decompression on-fly 
+  (the ammount of disk space needed to run the server was reduced to cca 25%, 
+  time to search is about twice of the original)
+
+2.42
+Bug fix in Wildcard/Substring search
+
+3.0 
+Nov-8-95
+Client/Server architecture
+Gopher daemon
+WWW interface
+
+3.01
+Jan-4-96
+Compression removed.
+Better compression with `path seed' introduced 
+  (~30% speed improvement(10->7 secs/90 MB db), saves ~60% of disk space)
+
+V1.0D
+Jan-5-96
+New major release version introduced as this is getting closer to my diploma 
+thesis
+
+Jan-9-96
+Server 3.1
+Btree database support
+
+Jan-12-96
+Server 3.13
+Several optimalizations added
+
+Gatherer 3.7
+Gatherer 3.62 rewritten and beautified.
+
+Jan-17-96
+Btree 1.02
+a minor Btree bug fixed
+
+Triples 1.1
+an independent and much faster triple generator
+
+Apr-24-96
+Gatherer 3.75
+GNUzip compressed Data/ directory w/ listings - Data/ is now about 10% of its
+original size
+
+Jun-25-97
+Btree 1.04
+If supported, btreehosts and btreefiles will use mmap()ed files as their 
+temporary data storages to save virtual memory.
+
+4.0 (May-8-2001)
+(1)Support multi keywords, exclusion and filename extention.
+(2)FTP site Statistic, include number of files, sepcial archives like .rm,.mp3,
+   Linux files(tar, gz, bz2),and show the last updata time.
+(3)show the updata time at each site when shows the search result.
+(4)sort the FTP sites, make the nearest site to the client as the first site.
+   according to IP.
+(5)remove many useless features, include interface of telnet,gopher and dos utils.
+(6)remove Btree, less memory request, less harddisk space. can contain 
+   more site, more data.
+(7)support submit new FTP site online, detect the site IP, DNS name and scope.
+   and collect site data automaticly.
+
+4.1 (May-20-2001)
+(1)Use LZO compress lib, save hard disk and very quickly.
+(2)Optimized search code. Now search more faster. (less then 4 sec in PIII-450 to seek 
+  110 site data.
+
+4.2 (MAR-16-2002)
+(1)use C programming to build the entire Parker.
+   Now It can run in redhat 7.x.
+(2)filter the invalid ftp site from the search list. 
+(3)Multi user language supported:English and Chinese
+(4)Fix some bug, clean the code
+(5)chang the way of resolving IP
+
+#############################################################################
+#   Platforms
+#############################################################################
+Developed and tested on these platforms:
+ Sun Sparc Server II, SunOS 4.1.3
+ Sun Sparc Server 10, Solaris 2
+ IBM PC, Linux Slackware 2.2, 2.3, 3.0, 3.1
+ SGI Indy, Onyx & Challenge, IRIX System V.4 
+4.0
+  Redhat Linux 6.2, PIII-800
+4.1
+  Redhat Linux 7.2,Mandrake Linux 8.1, Celeron 900, PIII-900
+  
+#############################################################################
+#   Working Sites
+#############################################################################
+NoseyParker has been so far installed on these sites
+(or at least that's what I know):
+
+parker.vslib.cz (parker) - The `mother' server at the Technical University
+                           in Liberec, Czech Republic - CESNET
+                           <Jiri.Randus@vslib.cz>
+
+nic.uakom.sk (parker)    - UAKOM UMB Banska Bystrica, Slovakia - SANET
+                           <smolenova@uakom.sk>
+
+parker.fnet.fr (parker)  - the French Parker
+                           <??>
+
+http://holem.belnet.be/  - BELNET Parker
+                           <Yvan.Blom@belnet.be>
+http://student.cs.tsinghua.edu.cn
+http://dii.nju.edu.cn
+http://sousuo.dhs.org
+http://sesa.nju.edu.cn
+http://parker.turboice.dhs.org
+http://clilac.fmmu.edu.cn
+http://ftp.xjtu.edu.cn
+
+#############################################################################
+#   Note
+#############################################################################
+
+I'm workingon it, and I would be very pleased if you sent me any kind of 
+feedback to my work.
+
+If you set up the server, please let me know - I will add you to the mailing 
+list concerning new releases, updates, usage problems and such. If you feel 
+enterprising, take a look at the code and enhance it in any way. BUT, please, 
+send your modifications back to my E-mail address so I can incorporate them into
+consequent releases of the software.
+
+I regret that I cannot help users with particular searches - I simply do
+not have the staffing resources to do this.
+
+

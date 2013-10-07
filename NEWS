@@ -1,0 +1,15 @@
+Please send Parker bug reports to xxxss@msn.com.
+
+
+Version 4.5
+* Add display of Host info,from file at SiteInfo directory
+
+
+Version 4.4
+* Add display of Host online/offline hint
+
+
+Version 4.3
+* Add user:pass@ip;port format filelist support
+* Bugfixes:
+*. download ls-lR bug

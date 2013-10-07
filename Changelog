@@ -1,0 +1,123 @@
+#############################################################################
+#   Changelog
+#############################################################################
+2007-05-21 Hai Xie <xxxssa@gmail.com>
+	* collect.c: fix typo
+
+2006-02-22 Sunry Chen <sunrychen@gmail.com>
+	* collect.c: added URL to store site url
+	* search.c: fixed a bug in ftpsite link
+
+2005-06-30  Hai Xie <xxxss@msn.com>
+	* collect.c(main): assign value to variable
+	(TempFile): added close fd, to fix the bug "Too Many Open Files"
+	(DoRecursive): fix a mistake, one "tmpfn" should be "tmpstr"
+	* siteinfo.c: added to release
+
+2004-07-06  Hai Xie <xxxss@msn.com>
+	* parker.h (UserLanguage): added site info to structure
+	* search.c: added site info hyperlink
+	* siteinfo.c: new file. display site infomation from file 
+	* language.h: added one phrase for site info
+
+2004-07-05  Hai Xie <xxxss@msn.com>
+	* parker.h (UserLanguage):add unit HLive to structure.
+	* listfilter.c: can handle ftplist with more type
+	* common.c(addftp,scanline):add scanline to addftp,deal new type list
+	(cmpfiletime): new function cal time and judge weather host are live
+	* search.c: display different pic when host live or not
+
+2004-04-19  Hai Xie <xxxss@sina.com>
+
+	* collect.c (WaitCon, Connect):
+	Add global variable ftp_port, ftp_user, ftp_pass.
+	(DoDownload): Deal with ls-lR
+	(scanline):New function
+
+4.2 (MAR-16-2002)
+	(1)use C programming to build the entire Parker.
+	   Now It can run in redhat 7.x.
+	(2)filter the invalid ftp site from the search list.
+	(3)Multi user language supported:English and Chinese
+	(4)Fix some bug, clean the code
+	(5)chang the way of resolving IP
+
+4.1 (May-20-2001)
+	(1)Use LZO compress lib, save hard disk and very quickly.
+	(2)Optimized search code. Now search more faster. (less then 4 sec in PIII-450 to seek
+	  110 site data.
+
+4.0 (May-8-2001)
+	(1)Support multi keywords, exclusion and filename extention.
+	(2)FTP site Statistic, include number of files, sepcial archives like .rm,.mp3,
+	   Linux files(tar, gz, bz2),and show the last updata time.
+	(3)show the updata time at each site when shows the search result.
+	(4)sort the FTP sites, make the nearest site to the client as the first site.
+	   according to IP.
+	(5)remove many useless features, include interface of telnet,gopher and dos utils.
+	(6)remove Btree, less memory request, less harddisk space. can contain
+	   more site, more data.
+	(7)support submit new FTP site online, detect the site IP, DNS name and scope.
+	   and collect site data automaticly.
+
+Jun-25-97
+Btree 1.04
+If supported, btreehosts and btreefiles will use mmap()ed files as their
+temporary data storages to save virtual memory.
+
+Apr-24-96
+Gatherer 3.75
+GNUzip compressed Data/ directory w/ listings - Data/ is now about 10% of its
+original size
+
+Triples 1.1
+an independent and much faster triple generator
+
+Jan-17-96
+Btree 1.02
+a minor Btree bug fixed
+
+Gatherer 3.7
+Gatherer 3.62 rewritten and beautified.
+
+Jan-12-96
+Server 3.13
+Several optimalizations added
+
+Jan-9-96
+Server 3.1
+Btree database support
+
+V1.0D
+Jan-5-96
+New major release version introduced as this is getting closer to my diploma
+thesis
+
+3.01
+Jan-4-96
+Compression removed.
+Better compression with `path seed' introduced
+  (~30% speed improvement(10->7 secs/90 MB db), saves ~60% of disk space)
+
+3.0
+Nov-8-95
+Client/Server architecture
+Gopher daemon
+WWW interface
+
+2.42
+Bug fix in Wildcard/Substring search
+
+2.41
+Data compression on gathering, decompression on-fly
+  (the ammount of disk space needed to run the server was reduced to cca 25%,
+  time to search is about twice of the original)
+
+2.4
+Substring and Wildcards search converted to fast egrep search.
+
+2.31
+the version used for quite a long time, proving its strengths and weaknesses.
+
+before 2.31
+Many changes, in fact, the birth of NoseyParker.

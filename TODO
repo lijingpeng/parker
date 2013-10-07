@@ -1,0 +1,34 @@
+default, search the ls-lR file first (type -d), if not exist, then use -l or -r
+if the ftp site has ls-lR(or ls-lR.gz), and these file is too old. collect
+        would download and keep this. 
+	collect will contrast the date if it is up-to-date in the future
+ftp data update time accurate to hour:minute;
+flashdata cannot do makestat auto (need chdir to $parkerhome/bin/)
+added total file size list
+support username,passwd,port      done
+support ftp server owner list
+can store the details of the ftp server description
+display whether this ftp site is open when search
+can scan ftp from whole lan machine  (now use other program)
+revive Btree
+less mem,less cpu,
+move all user define in one file.(path & other setting)
+remove the ftpdata that out of date.(make flashlist to more reliable)
+
+已知的问题：在collect.c 执行中
+1.获取一些ftp系统的目录时, 会出现问题。
+2.时间设置的太短，会中途停下来。
+（#define PARKER_NICE 300)
+3.在DoFormat后main中的变量会被改变。
+
+change the global variable in collect.c(scanline) to local struct variable
+use database instead of files.
+change the bin/flashdata,flashlist to c 
+
+flashlist这个文件应该改成更可靠的方式。
+listfilter.c 的处理能力不够强。
+
+one site with different username and password should be split. And the infomation should be store in different files. 
+
+It can be customed that different site with different scan method.
+

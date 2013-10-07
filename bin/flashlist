@@ -1,0 +1,7 @@
+#!/bin/sh
+
+ls ../LZOData >../etc/workinglist
+cat ../etc/CollectList >> ../etc/backlist
+../bin/listfilter ../etc/backlist
+mv ../etc/CollectList ../etc/backlist
+../bin/listfilter ../etc/workinglist 
