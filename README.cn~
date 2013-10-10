@@ -9,10 +9,7 @@ Original project on sourceForge, i copy them to github.
 
 New installation guide:
 Edited date:2013.10.09 by lijingpeng
-##############################################################
-Problem:
-Gibberish exits when browsing windows based FTP site. 
-##############################################################
+
 --------------------------------------------------------------
 For linux system:
 
@@ -29,8 +26,6 @@ For linux system:
 
     sudo cp -R parker/html /var/www
 
-    ##For apache settings, see apendix 1.
-
 4. Change owner of /var/www/parker
     
     sudo chown -R www-data:www-data /var/www/parker
@@ -39,34 +34,7 @@ For linux system:
 
     sudo mkdir /var/www/cgi-bin
     
-    Then you need to make true that it is correctly configured in apache, guides in apendix 1.
-
-###Advanced section
-6.  Compile source code
-    
-    cd /var/parker/etc
-    sudo make & make install
-
-###About how to use
-7.  After compiled, bin files will be created in src/ folder, you can copy them to /parker/bin
-
-8.  Edit CollectList file in parker/etc/
-
-    cd /var/parker/parker
-    sudo vim CollectList
-#   add FTP site like:
-    ftp://username:password@219.225.230.120:21
-
-    Optional:
-    sudo mkdir /var/www/cgi-bin/parker
-    sudo mkdir /var/www/cgi-bin/parker/etc
-    sudo cp /var/parker/etc/CollectList /var/www/cgi-bin/parker/etc
-9.  Collect data
-    
-    cd /var/parker/bin
-    ./collect
-
-10. More functions are listed in this file bellow.
+    Then you need to make true that it is correctly configured in apache, guides in apendix.
 
 ###Apendix
 1.  Web site settings
@@ -77,33 +45,8 @@ For linux system:
         cd /sites-avaliable 
         sudo vim parker
     c.  add to parker
+        
 
-        <VirtualHost *:80>
-		DocumentRoot /var/www/
-		<Directory />
-			Options FollowSymLinks
-			AllowOverride None
-		</Directory>
-		<Directory /var/www/parker>
-			Options Indexes FollowSymLinks MultiViews
-			AllowOverride None
-			Order allow,deny
-			allow from all
-		</Directory>
-	
-		ScriptAlias /cgi-bin/ /var/www/cgi-bin/
-		<Directory "/var/www/cgi-bin">
-			AllowOverride None
-			Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-			Order allow,deny
-			Allow from all
-		</Directory>
-	</VirtualHost>
-
-2.  Chrome 404 Error: search is not in this server
-    Solution:
-
-    copy /var/parker/bin/search or /var/parker/src/#bin files# to /var/www/cgi-bin/
 
 **************************************************************
 *
