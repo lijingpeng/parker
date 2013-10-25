@@ -13,6 +13,7 @@
 #include "parker.h"
 #include "language.h"
 #include "minilzo.h"
+#include <ctype.h>
 
 #define ANONYMOUS "anonymous"
 #define ANONYPASS "my@my.com"
@@ -401,9 +402,9 @@ void PutHeaders(void)
 {
   puts("Content-type:text/html\n\n");
   printf("<html><head><TITLE>%s</TITLE></head>\n",UserLanguage->HSearchResult);
-  printf("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=%s\">\n",UserLanguage->HHtmlCharset);
-  puts("<BODY BGCOLOR=#ffffff background='/images/wallbg.jpg' align=left>\n");
-  puts("<IMG SRC=\"/images/parker.gif\" ALIGN=RIGHT>\n");
+  printf("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >\n");
+  puts("<BODY BGCOLOR=#ffffff>\n");
+//  puts("<IMG SRC=\"/images/parker.gif\" ALIGN=RIGHT>\n");
   printf("<div><dir><H2><a href=\"/\">%s</a></H2>",UserLanguage->HHtmlTitle);
   puts("<style>");
   puts("a {  color: rgb(0,0,150) ; Text-decoration:none  ; font-weight : none}");
@@ -463,9 +464,9 @@ int Search(void)
         strcpy(lasthost,CurrentHost);
         error=1;
         if (cmpfiletime(CurrentHost))
-          puts("<font size=4><IMG SRC=\"/images/host.gif\" WIDTH=32 HEIGHT=32>");
+          {}//puts("<font size=4><IMG SRC=\"/images/host.gif\" WIDTH=32 HEIGHT=32>");
         else
-          printf("<font size=4><IMG SRC=\"/images/badhost.gif\" WIDTH=32 HEIGHT=32 alt='%s'>",UserLanguage->HLive);
+          {;}//printf("<font size=4><IMG SRC=\"/images/badhost.gif\" WIDTH=32 HEIGHT=32 alt='%s'>",UserLanguage->HLive);
 //        puts("<font size=4><IMG SRC=\"/images/host.gif\" WIDTH=32 HEIGHT=32>");
 //        if(getdnsname(CurrentHost, dnsname))
 // added by Sunry Chen
@@ -473,12 +474,12 @@ int Search(void)
         scanline(CurrentHost_t);
 
 	if(getdnsname(site.ftp_name, dnsname))
-	  printf(" <A HREF=\"ftp://%s/\"><b>%s</b></A></font>",CurrentHost,dnsname);
+	  printf("<A HREF=\"ftp://%s/\"><b>%s</b></A></font>",CurrentHost,dnsname);
         else 
-          printf(" <A HREF=\"ftp://%s/\"><b>%s</b></A></font> ",CurrentHost,CurrentHost);
+          printf("<A HREF=\"ftp://%s/\"><b>%s</b></A></font> ",CurrentHost,CurrentHost);
         if(getfiletime(CurrentHost, timestr,UserLanguage))
           printf(" %s:%s\n",UserLanguage->HUpdata,timestr);
-	printf("&nbsp;&nbsp<A HREF='siteinfo?%s'><i>%s</i></A>",CurrentHost,UserLanguage->HInfo);
+//	printf("&nbsp;&nbsp<A HREF='siteinfo?%s'><i>%s</i></A>",CurrentHost,UserLanguage->HInfo);
         puts("<br>");
         fflush(stdout);
       }
@@ -516,7 +517,7 @@ int Search(void)
 	fflush(stdout);
       if(flag) { /* Can find more */
 //        printf(", %s<A HREF=\"/cgi-bin/cgftpunion/search?",UserLanguage->HPressHere);
-        printf(", %s<A HREF=\"/cgi-bin/parker/search?",UserLanguage->HPressHere);
+        printf(",  %s<A HREF=\"/cgi-bin/ftp/search?",UserLanguage->HPressHere);
 	printf("String=%s",ArgBack.String);
         printf("&Not="); EnConv(ArgBack.Not);
         printf("&Ext="); EnConv(ArgBack.Ext);
@@ -535,8 +536,8 @@ int Search(void)
 void PutEnd()
 {
 //printf("<hr size=3><FORM ACTION='/cgi-bin/cgftpunion/search' ID='s'><h2><font color=#9C0000>%s</font></h2>\n",UserLanguage->HNewSearch);
-printf("<hr size=3><FORM ACTION='/cgi-bin/parker/search' ID='s'><h2><font color=#9C0000>%s</font></h2>\n",UserLanguage->HNewSearch);
-printf("<table><tr><td><ALIGN='left'>\n");
+printf("<hr size=3><FORM ACTION='/cgi-bin/ftp/search' ID='s'><h2 align='center'><font color=#9C0000>%s</font></h2>\n",UserLanguage->HNewSearch);
+printf("<table align='center'><tr><td><ALIGN='center'>\n");
 printf("	    <SELECT NAME='SearchType' >\n");
 if(SearchType){
 printf("		<OPTION VALUE='wildcards'>%s\n",UserLanguage->HFullFileName);
@@ -548,12 +549,12 @@ printf("		<OPTION VALUE='wildcards'>%s\n",UserLanguage->HFullFileName);
 printf("	    </SELECT>");
 printf("		<INPUT TYPE='text' NAME='String' SIZE='25' value=");
 printf("'%s'",ArgBack.String);puts(">");
-printf("		<INPUT TYPE='submit' VALUE='%s  '>\n",UserLanguage->HGoSearch);
-printf("	<br>%s<INPUT TYPE='text' NAME='Not' SIZE='25' value=",UserLanguage->HExclusion);
+//printf("		<INPUT TYPE='submit' VALUE='%s  '>\n",UserLanguage->HGoSearch);
+printf("	%s<INPUT TYPE='text' NAME='Not' SIZE='10' width='200' value=",UserLanguage->HExclusion);
 printf("'%s'",ArgBack.Not);puts(">");
-printf(" 	<br>%s<INPUT TYPE='text' NAME='Ext' SIZE='25' value=",UserLanguage->HExtName);
+printf(" 	%s<INPUT TYPE='text' NAME='Ext' SIZE='10' width='200' value=",UserLanguage->HExtName);
 printf("'%s'",ArgBack.Ext);puts(">");
-printf("	<br>%s\n",UserLanguage->HSearchType);
+printf("	%s\n",UserLanguage->HSearchType);
 printf("	    <SELECT NAME='Case'>\n");
 if(iscase){
 printf("		<OPTION VALUE='case'>%s\n",UserLanguage->HIsCaseCaption);
@@ -568,15 +569,60 @@ printf("		<OPTION VALUE='50'>50\n");
 printf("		<OPTION VALUE='100'>100\n");
 printf("		<OPTION VALUE='500'>500\n");
 printf("	    </SELECT>\n");
+printf("		<INPUT TYPE='submit' color=red VALUE='New Search %s  '>\n",UserLanguage->HGoSearch);
 printf("      </td></tr>\n");
 printf("  <tr><td  COLSPAN='5'><dir><dir><BR>\n");
 printf("</table></form>\n");
-printf("<font color='#000000'>%s\n",UserLanguage->HProductby);
+printf("<div align=center>");
+printf("<font color=gray >Copyright &copy HIT 2013 %s\n",UserLanguage->HProductby);
 printf("<A HREF=\"/\" TARGET=_top>%s</A>.",UserLanguage->HHostName);
+printf("</div>");
 printf("</BODY></HTML>");
 fflush(stdout);
 }
 
+// Convert HEX to Decade
+int HEX_TO_DECADE(char* s)
+{
+	char *digits="0123456789ABCDEF";
+	if (islower (s[0]))
+		s[0]=toupper(s[0]);
+	if (islower (s[1]))
+        s[1]=toupper(s[1]);
+    
+	return 16*(strchr(digits,s[0])-strchr(digits,'0'))+(strchr(digits,s[1])-strchr(digits,'0'));
+}
+
+// Convert charset before search
+void ConvertCharset(char* src, char* dst)
+{
+	char tmp[3];
+	int len = strlen(src);
+	int i,j;
+	for( i=0, j=0; i < len; j++)
+	{
+		if(src[i] == '%')
+		{
+			tmp[ 0 ] = src[ i+1 ];
+			tmp[ 1 ] = src[ i+2 ];
+			tmp[ 2 ] = '\0';
+			dst[ j ] = HEX_TO_DECADE( tmp );
+			i += 3;
+		}
+		else if( src[i] == '+' )
+		{
+			dst[ j ] = src[ i ];
+			++i;
+		}
+		else
+		{
+			dst[ j ] = src [ i ];
+			++i;
+		}
+	}
+	dst[j] = '\0';	
+
+}
 
 int main(void)
 {
@@ -586,15 +632,18 @@ int main(void)
   int error=0;
 
   alarm(CGIALARM);
-  User_Language=getenv(ACCEPT_LANGUAGE);
+  /*User_Language=getenv(ACCEPT_LANGUAGE);
   if(User_Language && *User_Language && strstr(User_Language,"zh-cn"))
-  	{
-  		UserLanguage=&ChineseDef;
-  	}
+  {
+  	UserLanguage=&ChineseDef;
+  }
   else
-  		UserLanguage=&EnglishDef;
+  	UserLanguage=&EnglishDef;*/
+  UserLanguage=&EnglishDef;
   query=getenv(QUERYSTRING);
+//query="SearchType=substring&String=春节&Submit=&Not=&Ext=&Case=incase&Hits=100";
   PutHeaders();
+  //printf("%s\n\n", query);
 
   *Arg.String='\0';
   *Arg.Ext='\0';
@@ -605,26 +654,43 @@ int main(void)
 /*  strcpy(Arg.Collection,"All"); */
   Arg.StartPoint.StartHost=1;
   Arg.StartPoint.StartLine=1;
-
-  if(query && *query ){
+  
+  
+  if(query && *query )
+  {
     if(!strchr(query,'&'))
-    { if(!strncmp(query,"String=",7)) query+=7;
-      strncpy(Arg.String,query,MAX);
-    }else{
-      while(query && *query){
-        if(!strncmp(query,"String=",7)) {
+    { 
+	if(!strncmp(query,"String=",7)) query+=7;
+        strncpy(Arg.String,query,MAX);
+    }
+    else
+    {
+      while(query && *query)
+      {
+        if(!strncmp(query,"String=",7)) 
+	{
+	  //String
           query+=7;
           strncpy(Arg.String,query,MAX);
           if((pptr=strchr(Arg.String,'&'))!=NULL) *pptr='\0'; /* set the NULL at end of string */
-        }else if(!strncmp(query,"Not=",4)){
+          //printf("<p>---------------------------------------</p>");
+          //iiprintf("after strncmp, query=%s<br>\n", query);
+	  //printf("Arg.String=%s<br>\n", Arg.String);
+        }
+	else if(!strncmp(query,"Not=",4))
+	{
           query+=4;
           strncpy(Arg.Not,query,MAX);
           if((pptr=strchr(Arg.Not,'&'))!=NULL) *pptr='\0';
-        }else if(!strncmp(query,"Ext=",4)){
+        }
+	else if(!strncmp(query,"Ext=",4))
+	{
           query+=4;
           strncpy(Arg.Ext,query,MAX);
           if((pptr=strchr(Arg.Ext,'&'))!=NULL) *pptr='\0';
-        }else if(!strncmp(query,"Hits=",5)){
+        }
+	else if(!strncmp(query,"Hits=",5))
+	{
           query+=5;
           strncpy(genbuf,query,MAX);
           if((pptr=strchr(genbuf,'&'))!=NULL) *pptr='\0';
@@ -633,13 +699,17 @@ int main(void)
             Arg.Hits=100;
           else if(Arg.Hits > 1000)
             Arg.Hits=1000;
-        }else if(!strncmp(query,"Case=",5)) {
+        }
+	else if(!strncmp(query,"Case=",5)) 
+	{
           query+=5;
           if( !strncmp(query, SCASE,strlen(SCASE)))
             strcpy(Arg.Case,SCASE);
           else 
             strcpy(Arg.Case,SINCASE);
-        }else if(!strncmp(query,"SearchType=",11)) {
+        }
+	else if(!strncmp(query,"SearchType=",11)) 
+	{
           query+=11;
           if( !strncmp(query, SWILDCARDS,strlen(SWILDCARDS)))
             strcpy(Arg.SearchType,SWILDCARDS);
@@ -649,7 +719,9 @@ int main(void)
           query+=11;
           strcpy(Arg.Collection,query);
           if((pptr=strchr(Arg.Collection,'&'))!=NULL) {*(pptr)='\0';}*/
-        } else if(!strncmp(query,"StartPoint=",11)) {
+        } 
+	else if(!strncmp(query,"StartPoint=",11)) 
+	{
           query+=11;
           strcpy(genbuf,query);
           if((pptr=strchr(genbuf,','))!=NULL){
@@ -665,21 +737,41 @@ int main(void)
       }
     }
   }
-  Conv(Arg.String);
-  Conv(Arg.Not);
-  Conv(Arg.Ext);
+// Convert Charset
+ /* printf("<p> before convert </p>");
+  printf("String:%s<br>\n",Arg.String);
+  printf("NOT:%s<br>\n",Arg.Not);
+  printf("Ext:%d<br>\n",Arg.Ext);
+  printf("Hits:%d<br>\n",Arg.Hits);
+  printf("StartPoint:%d,%d<br>\n",Arg.StartPoint.StartHost,Arg.StartPoint.StartLine);
+*/
+  char tmpCov[ MAX ];
+  ConvertCharset(Arg.String, tmpCov);
+  strncpy(Arg.String, tmpCov, strlen(tmpCov) + 1);
+  //Conv(Arg.String);
+  ConvertCharset(Arg.Not, tmpCov);
+  strncpy(Arg.Not, tmpCov, strlen(tmpCov) + 1);
+  
+  ConvertCharset(Arg.Ext, tmpCov);
+  strncpy(Arg.Ext, tmpCov, strlen(tmpCov) + 1);
+
+  //Conv(Arg.Not);
+  //Conv(Arg.Ext);
   memcpy(&ArgBack,&Arg,sizeof(Arg));
 
-  /* Convert from the `%' notation */
-  #ifdef DEBUG
-    	printf("at main end:====<br>\n");
+  /* Convert from the `%' notation 
+//  #ifdef DEBUG
+    	printf("<p> after convert </p>");
     	printf("String:%s<br>\n",Arg.String);
-    	printf("Ext:%s<br>\n",Arg.Ext);
+        printf("NOT:%s<br>\n",Arg.Not);
+  	printf("Ext:%s<br>\n",Arg.Ext);
 	printf("Hits:%d<br>\n",Arg.Hits);
 	printf("StartPoint:%d,%d<br>\n",Arg.StartPoint.StartHost,Arg.StartPoint.StartLine);
-  #endif
-  if(strlen(Arg.String)>=MINLENGTHOFSEARCH){
-    if(Arg.StartPoint.StartHost*Arg.StartPoint.StartLine==1){ /* log only once */
+  //#endif*/
+  if(strlen(Arg.String)>=MINLENGTHOFSEARCH)
+  {
+    if(Arg.StartPoint.StartHost*Arg.StartPoint.StartLine==1)
+    { /* log only once */
       sprintf(genbuf,"Seach:'%s' ",Arg.String);
       if(strcmp(Arg.SearchType,SSUBSTRING)) strcat(genbuf,SWILDCARDS);
       if(*Arg.Not){ strcat(genbuf,",Not:"); strcat(genbuf,Arg.Not);}

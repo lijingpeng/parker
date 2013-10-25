@@ -3,8 +3,8 @@ struct LanguageDef *UserLanguage;
 
 struct LanguageDef EnglishDef={
 "English",
-"Parker FTP Searcher",
-"iso-8859-1",
+"FTP Searcher",
+"utf-8",
 "/",
 
 " '",
@@ -29,8 +29,8 @@ struct LanguageDef EnglishDef={
 "Sorry, Can't find anything",
 "Have found",
 "files",
-"Press here",
-"to get more...",
+"",
+"Press here to get more...",
 
 "New search",
 "FullName",
