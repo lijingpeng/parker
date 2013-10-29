@@ -7,6 +7,29 @@ Thanks to Nanjing University and all the contributors.
 Lisence: GPL v2.0
 Original project on sourceForge, i copy them to github.
 
+Version 5.0 Last edited: 2013-10-29 by lijingpeng
+1.修给Makefile，执行make install可以直接将可执行文件安装到bin和/var/www/cgi-bin，将网页安装到/var/www/parker
+2.执行make realclean删除的时候将会直接删除bin文件和网页文件，变得更加彻底
+3.添加apache配置文件用户需要将parker_apache拷贝到apache的配置文件下，并重启apache
+
+New installation guide:
+1. Download source
+    git clone git@github.com:lijingpeng/parker.git
+2. make && make install
+    cd /src
+    make
+    sudo make install
+3. apache setting
+    sudo cp parker_apache /etc/apache2/sites-avaliable
+    sudo service apache2 restart
+
+Tips
+1.  Browse in Chrome or firefox
+    http://localhost/parker
+2.  If you want to change install destination, just edit Makefile and change file path.
+
+The following guide was old.
+_____________________________________________________________________________________________________________
 New installation guide:
 Edited date:2013.10.09 by lijingpeng
 ##############################################################
