@@ -1,0 +1,28 @@
+<VirtualHost *:80>
+#	ServerAdmin webmaster@localhost
+
+	DocumentRoot /var/www/
+	DocumentRoot /var/www/parker
+
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/parker>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		DirectoryIndex index.html index.shtml
+		Order allow,deny
+		allow from all
+	</Directory>
+
+	
+	ScriptAlias /cgi-bin/ /var/www/cgi-bin/
+	<Directory "/var/www/cgi-bin">
+		AllowOverride None
+		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+</VirtualHost>

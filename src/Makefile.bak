@@ -1,6 +1,5 @@
 PARKER_HOME= /var/parker
 CGI_HOME= /var/www/cgi-bin/parker 
-HTML_HOME=/var/www/parker
 VALIDDAYS=30
 #Define the user Language: english or chinese
 CC= gcc
@@ -20,21 +19,11 @@ default: all
 all: $(EXES)
 
 install: default
-	@if [ ! -d "/var/www/cgi-bin" ]; then \
-		mkdir /var/www/cgi-bin; \
-	fi
-	@if [ ! -d $(CGI_HOME) ]; then \
-		mkdir $(CGI_HOME); \
-	fi
 	-cp search $(CGI_HOME)
 	-cp statist $(CGI_HOME)
 	-cp submit $(CGI_HOME)
 	-cp siteinfo $(CGI_HOME)
-	@if [ ! -d $(HTML_HOME) ]; then \
-		mkdir $(HTML_HOME); \
-	fi
-	cp -R ../html/parker/* $(HTML_HOME)
-	@if [ ! -d ../bin ]; then \
+	@if [ ! -d ../bin ]; then
 		mkdir -p ../bin; \
 	fi
 	-cp getdnsname ../bin/.
@@ -49,8 +38,6 @@ clean:
 
 realclean: clean
 	-(cd ../bin; rm -f $(EXES) )
-	rm -fr $(CGI_HOME)
-	rm -fr $(HTML_HOME)
 
 siteinfo: siteinfo.c common.c parker.h language.h
 	$(CC) $(CFLAGS) -o siteinfo siteinfo.c common.c $(LDFLAGS)
