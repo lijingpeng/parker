@@ -3,9 +3,9 @@ parker
 
 An open source FTP Search engine
 
-Thanks to Nanjing University and all the contributors. </br>
-Lisence: GPL v2.0
-Original project on sourceForge, i copy them to github. </br>
+Thanks to Nanjing University and all the contributors. > 
+Lisence: GPL v2.0 > 
+Original project on sourceForge, i copy them to github. > 
 
 Version 5.0 Last edited: 2013-10-29 by lijingpeng </br>
 1.修给Makefile，执行make install可以直接将可执行文件安装到bin和/var/www/cgi-bin，将网页安装到/var/www/parker </br>
