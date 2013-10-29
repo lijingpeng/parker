@@ -3,34 +3,58 @@ parker
 
 An open source FTP Search engine
 
-Thanks to Nanjing University and all the contributors. > 
-Lisence: GPL v2.0 > 
-Original project on sourceForge, i copy them to github. > 
-
-Version 5.0 Last edited: 2013-10-29 by lijingpeng </br>
+Thanks to Nanjing University and all the contributors.
+> 
+Lisence: GPL v2.0 
+> 
+Original project on sourceForge, i copy them to github.
+> 
+> 
+Version 5.0 Last edited: 2013-10-29 by lijingpeng 
+> 
 1.修给Makefile，执行make install可以直接将可执行文件安装到bin和/var/www/cgi-bin，将网页安装到/var/www/parker </br>
+> 
 2.执行make realclean删除的时候将会直接删除bin文件和网页文件，变得更加彻底 </br>
+> 
 3.添加apache配置文件用户需要将parker_apache拷贝到apache的配置文件下，并重启apache </br>
- </br>
+> 
+> 
 New installation guide: </br>
+> 
 1. Download source </br>
-    git clone git@github.com:lijingpeng/parker.git </br>
+> 
+  git clone git@github.com:lijingpeng/parker.git </br>
+> 
 2. make && make install </br>
-    cd /src </br>
-    make </br>
-    sudo make install </br>
+> 
+  cd /src </br>
+> 
+  make </br>
+> 
+  sudo make install </br>
+> 
 3. apache setting </br>
-    sudo cp parker_apache /etc/apache2/sites-avaliable </br>
-    sudo service apache2 restart </br>
- </br>
+> 
+  sudo cp parker_apache /etc/apache2/sites-avaliable </br>
+> 
+  sudo service apache2 restart </br>
+> 
+> 
 Tips </br>
+> 
 1.  Browse in Chrome or firefox </br>
+>  
     http://localhost/parker </br>
+> 
 2.  If you want to change install destination, just edit Makefile and change file path. </br>
-
+> 
+> 
+> 
+> 
 
 The following guide was old.
- </br> </br> </br>
+> 
+</br> </br> </br>
 _____________________________________________________________________________________________________________
 New installation guide:
 Edited date:2013.10.09 by lijingpeng
