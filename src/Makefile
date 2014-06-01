@@ -89,7 +89,7 @@ config.h: conf.head conf.end Makefile
 
 flashdata: Makefile
 	echo \#!/bin/sh > flashdata
-	echo $(PARKER_HOME)/bin/collect >> flashdata
+	echo $(PARKER_HOME)/bin/collect -r >> flashdata
 	echo $(PARKER_HOME)/bin/makestat >> flashdata
 	chmod 755 flashdata
 
